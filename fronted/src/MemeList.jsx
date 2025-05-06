@@ -1,21 +1,14 @@
+import React from 'react';
 import MemeCard from './MemeCard';
 
-function MemeList({ memes, onVote }) {
+const MemeList = ({ memes }) => {
   return (
-    <div>
-      <h2>Memes Recientes</h2>
-      {memes.length === 0 ? (
-        <p>No hay memes aún.</p>
-      ) : (
-        memes.map((meme, index) => (
-          <MemeCard
-            key={index}
-            meme={{ ...meme, onVote: () => onVote(index) }}
-          />
-        ))
-      )}
+    <div className="meme-list">
+      {memes.map((meme) => (
+        <MemeCard key={meme.id} meme={meme} />
+      ))}
     </div>
   );
-}
+};
 
 export default MemeList;
