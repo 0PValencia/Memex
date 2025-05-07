@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import MemeList from './MemeList';
-import CreateMemeForm from './CreateMemeForm'; // Importación por defecto
+import CreateMemeForm from './CreateMemeForm';
+import { ConnectButton } from '@coinbase/onchainkit';
+
+
 
 function App() {
   const [memes, setMemes] = useState([]);
@@ -11,20 +14,26 @@ function App() {
       imageUrl,
       votes: 0,
     };
-    setMemes([newMeme, ...memes]); // Agrega el nuevo meme al principio
+    setMemes([newMeme, ...memes]); // Agregar el nuevo meme al principio
   };
 
   const voteMeme = (index) => {
-    const updated = [...memes];
-    updated[index].votes += 1;
-    setMemes(updated);
+    const updatedMemes = [...memes];
+    updatedMemes[index].votes += 1;
+    setMemes(updatedMemes); // Actualizar el estado con los nuevos votos
   };
 
   return (
     <div className="app">
       <h1>MemeX - Miniapp Social</h1>
+      <ConnectButton />
       <CreateMemeForm onSubmit={addMeme} />
-      <MemeList memes={memes} onVote={voteMeme} />
+      <h2>Memes Recientes</h2>
+      {memes.length === 0 ? (
+        <p>No hay memes aún.</p>
+      ) : (
+        <MemeList memes={memes} onVote={voteMeme} />
+      )}
     </div>
   );
 }
